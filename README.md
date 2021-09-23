@@ -27,7 +27,7 @@ pip install -r requirements.txt
 You can download all the corpora we used in our experiments as follows:
 
 ```
-wget http://dlsi.ua.es/~vmsanchez/emnlp2021-data.tar.gz
+wget http://www.dlsi.ua.es/~vmsanchez/emnlp2021-data.tar.gz
 tar xvzf emnlp2021-data.tar.gz
 ```
 
