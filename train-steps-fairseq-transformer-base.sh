@@ -25,7 +25,7 @@ temp=/tmp
 ##Descomentar per a executar WMT
 trainArgs="--arch transformer_wmt_en_de --share-all-embeddings  --label-smoothing 0.1 --criterion label_smoothed_cross_entropy --weight-decay 0  --optimizer adam --adam-betas '(0.9, 0.98)' --clip-norm 0 --lr-scheduler inverse_sqrt --warmup-updates 8000 --warmup-init-lr 1e-7 --lr 0.0007 --min-lr 1e-9  --save-interval-updates 5000  --patience 6 --no-progress-bar --max-tokens 4000 --eval-bleu --eval-tokenized-bleu --eval-bleu-args '{\"beam\":5,\"max_len_a\":1.2,\"max_len_b\":10}' --best-checkpoint-metric bleu --maximize-best-checkpoint-metric --keep-best-checkpoints 1 --keep-interval-updates 1 --no-epoch-checkpoints"
 
-moses_scripts=$MYFULLPATH/submodules/moses-scripts/scripts/
+moses_scripts=$CURDIR/submodules/moses-scripts/scripts/
 
 nomalizer=$moses_scripts/tokenizer/normalize-punctuation.perl
 tokenizer=$moses_scripts/tokenizer/tokenizer.perl
@@ -35,8 +35,8 @@ train_truecaser=$moses_scripts/recaser/train-truecaser.perl
 truecaser=$moses_scripts/recaser/truecase.perl
 detruecaser=$moses_scripts/recaser/detruecase.perl
 
-apply_noise="python $MYFULLPATH/tools/apply-noise.py"
-apply_bil_noise="python $MYFULLPATH/tools/apply-bilingual-noise.py"
+apply_noise="python $CURDIR/tools/apply-noise.py"
+apply_bil_noise="python $CURDIR/tools/apply-bilingual-noise.py"
 
 prepare_data () {
 
