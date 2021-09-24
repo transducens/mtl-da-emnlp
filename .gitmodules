@@ -1,3 +1,9 @@
 [submodule "submodules/moses-scripts"]
 	path = submodules/moses-scripts
 	url = https://github.com/marian-nmt/moses-scripts
+[submodule "submodules/mosesdecoder"]
+	path = submodules/mosesdecoder
+	url = https://github.com/moses-smt/mosesdecoder.git
+[submodule "submodules/mgiza"]
+	path = submodules/mgiza
+	url = https://github.com/moses-smt/mgiza.git
