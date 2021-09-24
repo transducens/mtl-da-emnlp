@@ -41,7 +41,7 @@ In order to train a baseline system, run the script shown below, where the Bash 
 * $TRAINSET: training data to use. `iwslt` contains IWSLT training parallel data, while `iwsltbackt` also includes backtranslated monolingual English sentences extracted from TED Talks.
 
 ```
-./train-baseline.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train $DATA/$TRAINSET-$PAIR/dev $DATA/$TRAINSET-$PAIR/test
+./train-baseline.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test
 ```
 
 You can find the resulting BLEU and chrF++ scores in the file `$DIR/eval/report-train`
