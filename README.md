@@ -38,6 +38,7 @@ cd submodules/mgiza/mgizapp
 mkdir build && cd build
 cmake ..
 make
+ln -s $PWD/../scripts/merge_alignment.py $PWD/bin/merge_alignment.py
 cd ../../../..
 ```
 
