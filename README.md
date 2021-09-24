@@ -31,6 +31,16 @@ wget http://www.dlsi.ua.es/~vmsanchez/emnlp2021-data.tar.gz
 tar xvzf emnlp2021-data.tar.gz
 ```
 
+## Compile MGIZA++
+
+```
+cd submodules/mgiza/mgizapp
+mkdir build && cd build
+cmake ..
+make
+cd ../../../..
+```
+
 ## Train baseline systems
 
 In order to train a baseline system, run the script shown below, where the Bash variables have the following meaning:
