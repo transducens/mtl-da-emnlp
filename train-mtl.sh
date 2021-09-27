@@ -78,19 +78,29 @@ apply_bpe test tc $lang2
 
 clean_corpus train bpe clean-bpe
 
-add_task $noise $bpeOperationsAux train tc train2
-apply_bpe train2 tc $lang1
-if [ "$noise" != "bpe" ] && [ "$noise" != "rev2" ]
-then
-  apply_bpe train2 tc $lang2
-fi
+NUMAUX=2
+MAKE_DATA_INPUT="train "
+for localnoise in $(echo "$noise" | tr '+' '\n') ; do
 
-clean_corpus train2 bpe clean-bpe
+  add_task $localnoise $bpeOperationsAux train tc train$NUMAUX
+  apply_bpe train$NUMAUX tc $lang1
+
+  if [ "$localnoise" != "bpe" ] && [ "$localnoise" != "rev2" ]
+  then
+    apply_bpe train$NUMAUX tc $lang2
+  fi
+
+  clean_corpus train$NUMAUX bpe clean-bpe
+
+  MAKE_DATA_INPUT="$MAKE_DATA_INPUT train$NUMAUX"
+
+  NUMAUX=$(expr $NUMAUX + 1)
+
+done
 
 prepare_dev_test_sets
 
-make_data_for_training train train2
-
+make_data_for_training $MAKE_DATA_INPUT
 
 train_nmt
 
