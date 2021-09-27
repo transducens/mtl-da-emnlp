@@ -295,9 +295,18 @@ add_task () {
     cat $bpath/monotone.$lang1-$lang2.$lang2 > $permanentDir/corpus/$tag.$label.$lang2
   elif [ "$tasktype" = "replace" ] || [ "$tasktype" = "replace_tgt" ]
   then
-    corpora=$bpath/corpus.tok.truecase.clean
-    alignments=$bpath/aligned.intersection
-    bildic=$bpath/lex.f2e
+
+    #Call script to build alignments and lexicon
+    bash $CURDIR/tools/build_alignments_and_lexicon.sh $lang1 $lang2 $permanentDir $permanentDir/lexicon "$(nproc)" "$MTLDA_MOSES" "$MTLDA_MGIZAPP"
+
+    #corpora=$bpath/corpus.tok.truecase.clean
+    #alignments=$bpath/aligned.intersection
+    #bildic=$bpath/lex.f2e
+
+    corpora=$permanentDir/lexicon/debpe.train
+    alignments=$permanentDir/lexicon/intersection.alignments
+    bildic=$permanentDir/lexicon/e2f.lexicon
+
     paste $corpora.$lang1 $corpora.$lang2 | $apply_bil_noise $tasktype $bpeAux $alignments $bildic > $permanentDir/corpus/$tag.$label.$lang1-$lang2 2> $permanentDir/corpus/log.replace
     cut -f1 $permanentDir/corpus/$tag.$label.$lang1-$lang2 > $permanentDir/corpus/$tag.$label.$lang1
     cut -f2 $permanentDir/corpus/$tag.$label.$lang1-$lang2 > $permanentDir/corpus/$tag.$label.$lang2

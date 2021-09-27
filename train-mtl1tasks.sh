@@ -1,5 +1,7 @@
-#!/bin/bash 
+#!/bin/bash
 
+export MTLDA_MOSES
+export MTLDA_MGIZAPP
 
 if [ $# -lt 8 ]
 then
