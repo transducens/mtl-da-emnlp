@@ -104,3 +104,15 @@ Once the envitonment variables `MTLDA_MOSES` and `MTLDA_MGIZAPP` have been expor
 ## Train systems with "mono" auxiliary task
 
 Coming soon
+
+
+## Train systems with multiple auxiliary task
+
+Just run the same script as in the previous examples, and let the variable `AUXTASK` contain the names of the tasks split by `+`. For instance, if you want to train on the combination of the "reverse" and "replace" auxiliary tasks, define `AUXTASK` as `rev+replace`, as follows:
+
+```
+./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test rev+replace $ALPHA
+```
+
+Note that, currently, the value of the alpha parameter passed as argument is used for all the tasks. Hence, if you want to combine several tasks that have an alpha parameter (e.g. swap and replace) you cannot define a different value for each task.
+
