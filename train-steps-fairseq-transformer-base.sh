@@ -254,12 +254,11 @@ apply_bpe () {
 add_task () {
   tasktype=$1
   bpeAux=$2
-  bpath=$3
-  prefix=$4
-  label=$5
-  tag=$6
+  prefix=$3
+  label=$4
+  tag=$5
 
-  echo "add_task $tasktype $bpeAux $bpath $prefix $label $tag ######################"
+  echo "add_task $tasktype $bpeAux $prefix $label $tag ######################"
 
   if [ ! -e $permanentDir/corpus/$prefix.$label.$lang1 ]
   then

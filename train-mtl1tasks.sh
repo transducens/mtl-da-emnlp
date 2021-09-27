@@ -21,19 +21,14 @@ testCorpus=$7
 noise=$8
 
 bpeOperationsAux=$9
-bpath=${10}
 maxLegthAfterBpe=100
 
 
 if [ $noise == "rev" -o $noise == "src" ]; then
 	bpeOperationsAux="none"
-	bpath="none"
 fi
 
 
-if [ $noise == "wrdp" -o $noise == "swap" ]; then
-        bpath="none"
-fi
 
 set -euo pipefail
 
@@ -83,7 +78,7 @@ apply_bpe test tc $lang2
 
 clean_corpus train bpe clean-bpe
 
-add_task $noise $bpeOperationsAux $bpath train tc train2
+add_task $noise $bpeOperationsAux train tc train2
 apply_bpe train2 tc $lang1
 if [ "$noise" != "bpe" ] && [ "$noise" != "rev2" ]
 then
