@@ -30,16 +30,24 @@ You can download all the corpora we used in our experiments as follows:
 wget http://www.dlsi.ua.es/~vmsanchez/emnlp2021-data.tar.gz
 tar xvzf emnlp2021-data.tar.gz
 ```
-
 ## Compile MGIZA++
 
+If you are going to add the "replace" or "mono" auxiliary tasks, you will need to install MGIZA++ as follows. You can skip this section if you are not going to produce synthetic data with these auxiliary tasks.
+
 ```
-cd submodules/mgiza/mgizapp
+git clone https://github.com/moses-smt/mgiza.git
+cd mgiza/mgizapp
 mkdir build && cd build
 cmake ..
 make
 ln -s $PWD/../scripts/merge_alignment.py $PWD/bin/merge_alignment.py
-cd ../../../..
+cd ../../..
+```
+
+Once finished, export the Bash environment variable `MTLDA_MGIZAPP` with the path to the MGIZA++ installation directory. The training scripts make use of this environment variable.
+
+```
+export MTLDA_MGIZAPP=$PWD/mgiza/mgizapp/build/bin/
 ```
 
 ## Train baseline systems
@@ -64,7 +72,7 @@ The Bash variables have the same meaning as in the previous section, and we have
 * $AUXTASK: use `rev` for training with the "reverse" auxiliary task and `src` for training with the "source" auxiliary task.
 
 ```
-./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train $DATA/$TRAINSET-$PAIR/dev $DATA/$TRAINSET-$PAIR/test $AUXTASK
+./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test $AUXTASK
 ```
 
 ## Train systems with "token" or "swap" auxiliary tasks
@@ -75,9 +83,24 @@ The "token" and "swap" auxiliary tasks require an alpha parameter that controls 
 * $ALPHA: proportion of the tokens in the target sentence that are modified. The best values are reported in the appendix of the paper.
 
 ```
-./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train $DATA/$TRAINSET-$PAIR/dev $DATA/$TRAINSET-$PAIR/test $AUXTASK $ALPHA
+./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test $AUXTASK $ALPHA
 ```
 
-## Train systems with "mono" or "replace" auxiliary tasks
+## Train systems with "replace" auxiliary task
 
-TODO
+The "replace" task requires word-aligning the training data and extracting a bilingual lexicon from it. In addition to MGIZA++, we will need a working installation of Moses. Please follow the [Moses official installation instructions](http://www.statmt.org/moses/?n=Development.GetStarted). Once installed, export the Bash environment variable MTLDA_MOSES with the path to the Moses root directory, as in the following example:
+
+```
+export MTLDA_MOSES=/home/myuser/software/mosesdecoder
+```
+
+Once the envitonment variables `MTLDA_MOSES` and `MTLDA_MGIZAPP` have been exported, you can train a system by issuing a command similar to the ones depicted for other auxiliary tasks:
+
+```
+./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test replace $ALPHA
+```
+
+
+## Train systems with "mono" auxiliary task
+
+Coming soon
