@@ -65,6 +65,12 @@ In order to train a baseline system, run the script shown below, where the Bash 
 
 You can find the resulting BLEU and chrF++ scores in the file `$DIR/eval/report-train`
 
+By default, the GPU 0 as shown by the the `nvidia-smi` command will be used to train the system. If you want to use another GPU, prepend the string `CUDA_VISIBLE_DEVICES=NUM_GPU` to the training command, as in the following example:
+
+```
+CUDA_VISIBLE_DEVICES=2 ./train-baseline.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test
+```
+
 
 ## Train systems with "reverse" or "source" auxiliary tasks
 
@@ -74,6 +80,8 @@ The Bash variables have the same meaning as in the previous section, and we have
 ```
 ./train-mtl1tasks.sh $L1 $L2 $DIR $bpe data/$TRAINSET-$PAIR/train data/$TRAINSET-$PAIR/dev data/$TRAINSET-$PAIR/test $AUXTASK
 ```
+
+You can find the resulting BLEU and chrF++ scores in the file `$DIR/eval/report-tune`. If that file does not exists because BLEU in the development set did not improve during finetuning, scores can be found in the file `$DIR/eval/report-tune`.
 
 ## Train systems with "token" or "swap" auxiliary tasks
 
